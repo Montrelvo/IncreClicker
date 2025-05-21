@@ -1,4 +1,4 @@
-# Incremental Clicker Webpage Plan
+# Combined Incremental Clicker Webpage Plan
 
 ## 1. Project Setup
 
@@ -19,22 +19,30 @@
 * Dropdown appearance: Style `<select>` and `<option>` for readability (padding, font-size).
 * Hover/focus: Add simple hover/focus states to highlight interactive elements.
 
-## 4. Visual Design & UI Element
+## 4. Visual Design & UI Elements
 
 * Color scheme: Choose a visually appealing color palette that fits the game's theme.
 * Typography: Select a clear and readable font for the score display, upgrade names, and other text elements.
 * Animations: Add subtle animations to score changes, button clicks, and upgrade purchases to provide visual feedback.
 * Icons: Use icons to represent different types of upgrades and resources.
 * Overall aesthetic: Ensure the UI is clean, intuitive, and engaging.
+* Minimalist Graphics: Simple visuals that focus on gameplay mechanics.
+* Dynamic Feedback: Visual or auditory cues that respond to player actions.
+* Customization Options: Ability for players to personalize aspects of the game.
 
 ## 5. JavaScript Logic
 
-* **5.1 Score State:**
+* **5.1 Core Gameplay Mechanics:**
+  * Automated Progression: Games continue to generate resources even when not actively played.
+  * Simple Interactions: Basic actions like clicking or tapping to initiate gameplay.
+  * Offline Earnings: Accumulation of resources while the game is inactive.
+  * Exponential Growth: Rapid scaling of numbers and resource generation.
+* **5.2 Score State:**
   * Declare `let score = 0;`, `let rate = 1;`, and `let prestigeLevel = 0;` at the top of `main.js`.
   * Create a function `updateDisplay()` that sets `document.getElementById('score').textContent = 'Score: ' + Math.floor(score);`.
-* **5.2 Game Loop:**
+* **5.3 Game Loop:**
   * Use `setInterval()` to add `rate` to `score` every second:
-
+  
     ```js
     setInterval(() => {
         score += rate;
@@ -42,8 +50,14 @@
     }, 1000);
     ```
 
-* **6. Building Dropdown Menus:**
-  * Data structures: Define arrays of upgrade objects, e.g.
+* **5.4 Resource Management:**
+  * Multiple Currencies: Different types of in-game currencies for various purposes.
+  * Strategic Allocation: Decisions on how to best use resources for optimal progression.
+  * Generators: Units or systems that produce resources over time.
+
+## 6. Building Dropdown Menus
+
+* Data structures: Define arrays of upgrade objects, e.g.
 
     ```js
     const passiveUpgrades = [
@@ -52,7 +66,7 @@
     ];
     ```
 
-  * Populate menus: Loop through each array and create `<option>` elements, filtering by layer:
+* Populate menus: Loop through each array and create `<option>` elements, filtering by layer:
 
     ```js
     passiveUpgrades.forEach((upg, i) => {
@@ -63,8 +77,12 @@
     });
     ```
 
-* **7. Handling Upgrades:**
-  * Event listeners:
+* Upgrade Paths: Enhancements that increase efficiency or unlock new features.
+* Skill Trees: Branching paths for character or resource development.
+
+## 7. Handling Upgrades
+
+* Event listeners:
 
     ```js
     document.getElementById('passive-menu').addEventListener('change', e => {
@@ -78,10 +96,14 @@
     });
     ```
 
-  * Active click bonus: Similarly populate “Active” menu with click-power upgrades and deduct points on purchase.
-* **8. Click Actions:**
-  * Manual clicks: Add a `<button id="click-btn">Click (+1)</button>` below the dropdowns.
-  * Click handler:
+* Active click bonus: Similarly populate “Active” menu with click-power upgrades and deduct points on purchase.
+* Prestige Mechanics: Resetting progress for permanent bonuses, encouraging replayability.
+* Milestone Rewards: Bonuses awarded upon reaching specific goals.
+
+## 8. Click Actions
+
+* Manual clicks: Add a `<button id="click-btn">Click (+1)</button>` below the dropdowns.
+* Click handler:
 
     ```js
     document.getElementById('click-btn').addEventListener('click', () => {
@@ -90,9 +112,11 @@
     });
     ```
 
-  * Click upgrades: Include click-power enhancements in the “Active” dropdown that multiply `clickPower`.
-* **9. Prestige System:**
-  * Add event listener to the prestige button:
+* Click upgrades: Include click-power enhancements in the “Active” dropdown that multiply `clickPower`.
+
+## 9. Prestige System
+
+* Add event listener to the prestige button:
 
     ```js
     document.getElementById('prestige-btn').addEventListener('click', () => {
@@ -104,22 +128,44 @@
     });
     ```
 
-* **10. Multiple Upgrade Layers:**
-  * Implement a system to unlock new upgrade layers based on score or prestige level.
-  * Use a variable `currentLayer` to track the currently active upgrade layer.
-  * Update the dropdown menus to display upgrades from the `currentLayer`.
-* **11. Integration & State Management:**
-  * Consolidate state: Keep `score`, `rate`, `clickPower`, `prestigeLevel`, and `currentLayer` as global variables and always call `updateDisplay()` after any change.
-  * Disable options: Optionally gray out `<option>` elements when `score < cost` for UX clarity (re-populate menus or toggle `disabled` flags).
+## 10. Multiple Upgrade Layers
 
-## 6. Testing & Debugging
+* Implement a system to unlock new upgrade layers based on score or prestige level.
+* Use a variable `currentLayer` to track the currently active upgrade layer.
+* Update the dropdown menus to display upgrades from the `currentLayer`.
+
+## 11. Integration & State Management
+
+* Consolidate state: Keep `score`, `rate`, `clickPower`, `prestigeLevel`, and `currentLayer` as global variables and always call `updateDisplay()` after any change.
+* Disable options: Optionally gray out `<option>` elements when `score < cost` for UX clarity (re-populate menus or toggle `disabled` flags).
+
+## 12. Testing & Debugging
 
 * Console logs: Sprinkle `console.log()` in event handlers to verify values.
 * Edge cases: Attempt purchases with insufficient score, rapid clicks, and page reload persistence tests.
 * Browser compatibility: Ensure `setInterval`, `addEventListener`, and `<select>` work across major browsers.
 
-## 7. Deployment & Enhancements
+## 13. Deployment & Enhancements
 
 * Local server: Host via `live-server`, GitHub Pages, or any static host.
 * Persist data: Use `localStorage` to save `score`, `rate`, and `clickPower` on unload and load on startup.
 * Polish UI: Animate score changes, add sound effects, and refine dropdown interactions for a polished feel.
+* Daily Rewards: Incentives for players to log in regularly.
+* Achievements: Goals that provide a sense of accomplishment.
+* Narrative Elements: Storylines or character development to enhance immersion.
+* Social Features: Leaderboards or multiplayer interactions to foster community.
+
+## 14. Monetization
+
+* Microtransactions: Purchasable items or boosts to enhance gameplay.
+* Ad-Based Rewards: Optional advertisements that provide in-game benefits.
+* Time-Limited Offers: Special deals or events that encourage spending.
+
+## 15. Blade Idle Specific Features (Potential Enhancements)
+
+* Character Progression: Leveling up and enhancing a central character.
+* Equipment System: Collecting and upgrading weapons and armor.
+* Skill Development: Unlocking and improving abilities for combat efficiency.
+* Dungeon Exploration: Engaging in battles within various dungeon settings.
+* Pet Companions: Utilizing pets that provide additional support or bonuses.
+* Guild Participation: Joining groups for cooperative gameplay and rewards.
